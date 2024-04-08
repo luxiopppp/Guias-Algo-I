@@ -17,8 +17,12 @@ k n = f (g n)
 
 maximo3 :: Int -> Int -> Int -> Int
 maximo3 x y z | x > y && x > z = x
-              | y > x && y > z = y
-              | z > x && z > y = z
+              | y > z = y
+              | otherwise = z
+
+-- maximo3 x y z | x > y && x > z = x
+--               | y > x && y > z = y
+--               | z > x && z > y = z
 
 -- maximo3 x y z = max ( x max ( y z ) )
 
