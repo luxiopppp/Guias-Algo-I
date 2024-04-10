@@ -90,6 +90,9 @@ sumarSoloMultiplos (x, y, z) n | mod x n == 0 && mod y n == 0 && mod z n == 0 = 
                                | mod x n == 0 && mod y n == 0 && mod z n /= 0 = x + y
                                | mod x n == 0 && mod y n /= 0 && mod z n == 0 = x + z
                                | mod x n /= 0 && mod y n == 0 && mod z n == 0 = y + z
+                               | mod x n == 0 = x
+                               | mod y n == 0 = y
+                               | mod z n == 0 = z
                                | otherwise = 0
 
 posPrimerPar :: (Int, Int, Int) -> Int
