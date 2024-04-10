@@ -23,7 +23,7 @@ absoluto x | x < 0 = -x
 
 absolutoF :: Float -> Float
 absolutoF x | x < 0 = -x
-           | otherwise = x
+            | otherwise = x
 
 maximoabsoluto :: Int -> Int -> Int
 maximoabsoluto a b | a >= 0 && b <= 0 = max a (-b)
@@ -120,3 +120,27 @@ u n | n <= 7 = n * n
 l :: Int -> Int
 l n | mod n 2 == 0 = div n 2
     | mod n 2 /= 0 = ( 3 * n ) + 1
+
+
+-- 6
+
+bisiesto :: Int -> Bool
+bisiesto n | mod n 4 == 0 && mod n 100 /= 0 = True
+           | mod n 400 == 0 = True
+           | otherwise = False
+
+
+-- 7
+
+distanciaManhattan:: (Float, Float, Float) ->(Float, Float, Float) ->Float
+distanciaManhattan (x,y,z) (a,b,c) = absolutoF (x - a) + absolutoF (y - b) + absolutoF (z - c)
+
+
+-- 8
+
+-- comparar :: Int -> Int -> Int
+-- comparar a b | 
+--              | 
+
+-- sumaUltimosDosDigitos :: Int -> Int
+-- sumaUltimosDosDigitos 
