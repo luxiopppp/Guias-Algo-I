@@ -37,8 +37,17 @@ digitoUnidades, digitoDecenas :: Int -> Int
 digitoUnidades n = n `mod` 10
 digitoDecenas n = n `mod` 100 `div` 10
 
--- 4 b
+-- 4 b,c,e 
 
 todoMenor :: (Float, Float) -> (Float, Float) -> Bool
 todoMenor (x, y) (n, m) = x < n && y < m
 
+distanciaPuntos :: (Int, Int) -> (Int, Int) -> Int
+distanciaPuntos (x, y) (n, m) = (n - x) + (m - y)
+
+sumarSoloMultiplos :: (Int, Int, Int) -> Int -> Int
+sumarSoloMultiplos (x, y, z) n | x mod n == 0 && y mod n == 0 && z mod n == 0 = x + y + z
+                               | x mod n == 0 && y mod n == 0 && z mod n /= 0 = x + y
+                               | x mod n == 0 && y mod n /= 0 && z mod n == 0 = x + z
+                               | x mod n /= 0 && y mod n == 0 && z mod n == 0 = y + z
+                               | otherwise = 0
