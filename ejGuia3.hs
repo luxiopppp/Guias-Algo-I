@@ -1,4 +1,3 @@
-import Distribution.Simple.Utils (xargs)
 -- 1 a,b,c
 
 f,g,h,k :: Int -> Int
@@ -13,6 +12,8 @@ g n | n == 8 = 16
 h n = g (f n)
 
 k n = f (g n)
+
+
 
 -- 2 a,c,f,g,i,j
 
@@ -59,6 +60,8 @@ digitoUnidades, digitoDecenas :: Int -> Int
 digitoUnidades n = n `mod` 10
 digitoDecenas n = n `mod` 100 `div` 10
 
+
+
 -- 3
 
 estanRelacionados :: Int -> Int -> Bool
@@ -68,7 +71,7 @@ estanRelacionados a b = -(a*a) `div` (a*b) /= 0
 
 
 
--- 4 a,b,c,e 
+-- 4 a,b,c,d,e,f,g,h
 
 prodInt :: (Float, Float) -> (Float, Float) -> Float
 prodInt (x, y) (a, b) = (x * a) + (y * b)
@@ -76,8 +79,11 @@ prodInt (x, y) (a, b) = (x * a) + (y * b)
 todoMenor :: (Float, Float) -> (Float, Float) -> Bool
 todoMenor (x, y) (n, m) = x < n && y < m
 
-distanciaPuntos :: (Int, Int) -> (Int, Int) -> Int
-distanciaPuntos (x, y) (n, m) = (n - x) + (m - y)
+distanciaPuntos :: (Float, Float) -> (Float, Float) -> Float
+distanciaPuntos (x, y) (n, m) = ( (n - x) ** 2 + (m - y) ** 2) ** 0.5
+
+sumaTerna :: (Int, Int, Int) -> Int
+sumaTerna (x,y,z) = x + y + z
 
 sumarSoloMultiplos :: (Int, Int, Int) -> Int -> Int
 sumarSoloMultiplos (x, y, z) n | mod x n == 0 && mod y n == 0 && mod z n == 0 = x + y + z
@@ -94,3 +100,20 @@ posPrimerPar (x, y, z) | mod x 2 == 0 = 1
 
 crearPar :: t -> r -> (t,r)
 crearPar a b = (a,b)
+
+invertir :: (a, b) -> (b, a)
+invertir (a,b) = (b,a)
+
+
+-- 5
+
+todosMenores :: (Int, Int, Int) -> Bool
+todosMenores (x, y, z) = (u x) > (l x) && (u y) > (l y) && (u z) > (l z)
+
+u :: Int -> Int
+u n | n <= 7 = n * n
+    | n > 7 = ( 2 * n ) - 1
+
+l :: Int -> Int
+l n | mod n 2 == 0 = div n 2
+    | mod n 2 /= 0 = ( 3 * n ) + 1
