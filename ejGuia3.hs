@@ -81,6 +81,7 @@ todoMenor (x, y) (n, m) = x < n && y < m
 
 distanciaPuntos :: (Float, Float) -> (Float, Float) -> Float
 distanciaPuntos (x, y) (n, m) = ( (n - x) ** 2 + (m - y) ** 2) ** 0.5
+-- distanciaPuntos (x, y) (n, m) = sqrt ( (n - x) ** 2 + (m - y) ** 2)
 
 sumaTerna :: (Int, Int, Int) -> Int
 sumaTerna (x,y,z) = x + y + z
@@ -111,7 +112,7 @@ invertir (a,b) = (b,a)
 -- 5
 
 todosMenores :: (Int, Int, Int) -> Bool
-todosMenores (x, y, z) = (u x) > (l x) && (u y) > (l y) && (u z) > (l z)
+todosMenores (x, y, z) = u x > l x && u y > l y && u z > l z
 
 u :: Int -> Int
 u n | n <= 7 = n * n
@@ -138,9 +139,11 @@ distanciaManhattan (x,y,z) (a,b,c) = absolutoF (x - a) + absolutoF (y - b) + abs
 
 -- 8
 
--- comparar :: Int -> Int -> Int
--- comparar a b | 
---              | 
+comparar :: Int -> Int -> Int
+comparar a b | sumaUltimosDosDigitos a < sumaUltimosDosDigitos b = 1
+             | sumaUltimosDosDigitos a > sumaUltimosDosDigitos b = -1
+             | otherwise = 0
 
--- sumaUltimosDosDigitos :: Int -> Int
--- sumaUltimosDosDigitos 
+sumaUltimosDosDigitos :: Int -> Int -- ⌊ ⌋ "parte entera"
+sumaUltimosDosDigitos x | x < 0 = sumaUltimosDosDigitos (-x)
+                        | otherwise = (x `mod` 10) + (x `div` 10 `mod` 10)
