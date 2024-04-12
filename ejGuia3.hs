@@ -147,3 +147,6 @@ comparar a b | sumaUltimosDosDigitos a < sumaUltimosDosDigitos b = 1
 sumaUltimosDosDigitos :: Int -> Int -- ⌊ ⌋ "parte entera"
 sumaUltimosDosDigitos x | x < 0 = sumaUltimosDosDigitos (-x)
                         | otherwise = (x `mod` 10) + (x `div` 10 `mod` 10)
+
+
+-- FIN GUIA 3
