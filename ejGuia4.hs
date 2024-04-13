@@ -20,3 +20,20 @@ esDivisible a b | a < b = False
                 | otherwise = esDivisible (a - b) b
 
 
+-- 4 Especificar e implementar la función sumaImpares :: Integer ->Integer que dado n ∈ N sume los primeros n números impares
+
+sumaImpares :: Integer ->Integer
+sumaImpares 1 = 1
+sumaImpares 0 = 0
+sumaImpares n | mod n 2 == 0 = sumaImpares (n - 1)
+              | n < 0 = 0
+              | otherwise = n + sumaImpares (n - 2)
+
+
+-- 5 Implementar la función medioFact :: Integer ->Integer que dado n ∈ N calcula n!! = n (n−2)(n−4)· · · .
+
+medioFact :: Integer -> Integer
+medioFact 0 = 1
+medioFact 1 = 1
+medioFact n | n < 0 = n
+            | otherwise = n * medioFact (n - 2)
