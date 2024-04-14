@@ -87,18 +87,15 @@ f2 n q = (q^n) + f2 (n - 1) q
 f3 :: Int -> Int -> Int
 f3 n q = f2 (2*n) q
 
--- ? f4 :: Int -> Int -> Int
--- ? f4 0 _ = 1
--- ? f4 n q = ((q^(2*n)) + f4 (n - 1) q) - ((q^(n-1)) + f4 (n - 2) q)
 
 f4 :: Int -> Int -> Int
 f4 n q = f3 n q - f2 (n-1) q
 
-
--- 11 a Especificar e implementar una función eAprox :: Integer -> Float que aproxime el valor del número e a partir de la siguiente sumatoria
+-- ¡Atención! A veces ciertas funciones esperan un Float y nosotros tenemos un Int. Para estos casos podemos utilizar la función fromIntegral :: Int ->Float definida en el Preludio de Haskell.
+-- 11 a Especificar e implementar una función eAprox :: Integer -> Float que aproxime el valor del número e a partir de la siguiente sumatoria.
 
 eAprox :: Integer -> Float
-eAprox 0 = 0
+eAprox 0 = 1
 eAprox x = (1 / factorial x) + eAprox (x - 1)
 
 factorial :: Integer -> Float
@@ -106,8 +103,21 @@ factorial 0 = 1
 factorial n = fromIntegral n * factorial (n - 1)    -- ? fromIntegral
 
 
--- 11 b
+-- 11 b Definir la constante e :: Float como la aproximación de e a partir de los primeros 10 términos de la serie anterior.
 
+e :: Float
+e = eAprox 10
+
+
+-- ? 12 Especificar e implementar una función raizDe2Aprox :: Integer -> Float que dado n ∈ N devuelva la aproximación de √2 definida por √2 ≈ an−1.
+
+raizDe2Aprox :: Integer -> Float
+raizDe2Aprox 0 = 1
+raizDe2Aprox n = (2 + (1 / raizDe2Aprox (n - 1))) - 1
+
+-- sucecionRaiz2 :: Integer -> Float
+-- sucecionRaiz2 0 = 2
+-- sucecionRaiz2 n = 2 + (1 / raizDe2Aprox (n - 1))
 
 
 -- 13 Especificar e implementar la siguiente función
@@ -120,4 +130,8 @@ sumatoriaDoble n m = sumatoriaDoble (n-1) m + sumatoriaInterna n m
 sumatoriaInterna :: Int -> Int -> Int
 sumatoriaInterna _ 0 = 0
 sumatoriaInterna n j = n^j + sumatoriaInterna n (j-1)
+
+
+-- 14 Especificar e implementar una función sumaPotencias :: Integer ->Integer ->Integer ->Integer que dados tres naturales q, n, m sume todas las potencias de la forma q^a+b con 1 ≤ a ≤ n y 1 ≤ b ≤ m.
+
 
