@@ -160,23 +160,46 @@ sumaRacionalesAux p q | q == 1 = fromIntegral p
                       | otherwise = (fromIntegral p/fromIntegral q) + sumaRacionalesAux p (q-1)
 
 
--- 16 Recordemos que un entero p > 1 es primo si y s´olo si no existe un entero k tal que 1 < k < p y k divida a p.
+-- 16 Recordemos que un entero p > 1 es primo si y sólo si no existe un entero k tal que 1 < k < p y k divida a p.
 
--- 16a mplementar menorDivisor :: Integer ->Integer que calcule el menor divisor (mayor que 1) de un natural n pasado como par´ametro.
+-- 16a Implementar menorDivisor :: Integer ->Integer que calcule el menor divisor (mayor que 1) de un natural n pasado como parámetro.
 
+menorDivisor :: Integer -> Integer
+menorDivisor 1 = 1
+menorDivisor n = menorDivisorAux n 2 -- 2 porque pide menor divisor mayor que 1
 
-
-
--- 16b Implementar la funci´on esPrimo :: Integer ->Bool que indica si un n´umero natural pasado como par´ametro es primo.
-
-
-
-
--- 16c Implementar la funci´on sonCoprimos :: Integer ->Integer ->Bool que dados dos n´umeros naturales indica si no tienen alg´un divisor en com´un mayor estricto que 1.
+menorDivisorAux :: Integer -> Integer -> Integer
+menorDivisorAux n m | esDivisible n m = m -- m <=> mod n m == 0 => si n primo m <=> m = n
+                    | otherwise = menorDivisorAux n (m+1)
 
 
+-- 16b Implementar la función esPrimo :: Integer ->Bool que indica si un número natural pasado como parámetro es primo.
+
+esPrimo :: Integer -> Bool
+esPrimo n = n == menorDivisor n
 
 
--- 16d Implementar la funci´on nEsimoPrimo :: Integer ->Integer que devuelve el n-´esimo primo (n ≥ 1). Recordar que el primer primo es el 2, el segundo es el 3, el tercero es el 5, etc.
+-- 16c Implementar la función sonCoprimos :: Integer ->Integer ->Bool que dados dos números naturales indica si no tienen algún divisor en común mayor estricto que 1.
+
+sonCoprimos :: Integer -> Integer -> Bool
+sonCoprimos n m = sonCoprimosAux n m 2
+
+sonCoprimosAux :: Integer -> Integer -> Integer -> Bool
+sonCoprimosAux n m d | d > n || d > m = True
+                     | esDivisible n d && esDivisible m d = False
+                     | otherwise = sonCoprimosAux n m (d+1)
+
+
+-- 16d Implementar la función nEsimoPrimo :: Integer -> Integer que devuelve el n-ésimo primo (n ≥ 1). Recordar que el primer primo es el 2, el segundo es el 3, el tercero es el 5, etc.
+
+nEsimoPrimo :: Integer -> Integer
+nEsimoPrimo n = nEsimoPrimoAux n 0 2
+
+nEsimoPrimoAux :: Integer -> Integer -> Integer -> Integer
+nEsimoPrimoAux n c p | esPrimo p && c == n-1 = p -- CASO BASE
+                     | esPrimo p = nEsimoPrimoAux n (c+1) (p+1) -- si p es primo pero el contador no es igual a n pasa
+                     | otherwise = nEsimoPrimoAux n c (p+1) -- si p no es primo aumenta p en uno y pasa
+
+
 
 
