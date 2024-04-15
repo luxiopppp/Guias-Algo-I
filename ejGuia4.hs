@@ -9,7 +9,9 @@ fibonacci n = fibonacci(n-1) + fibonacci(n-2)
 -- 2 Implementar una función parteEntera :: Float -> Integer
 
 parteEntera :: Float -> Integer
-parteEntera n = floor n
+parteEntera x | x >= 0 && x < 1 = 0
+              | x >= 1 = 1 + parteEntera (x-1)
+              | x < 0 = 1 + parteEntera (x+1)
 
 
 -- 3 Especificar e implementar la función esDivisible :: Integer -> Integer -> Bool que dados dos números naturales determinar si el primero es divisible por el segundo. 
@@ -50,9 +52,9 @@ sumaDigitos x = x `mod` 10 + sumaDigitos (x `div` 10)
 
 todosDigitosIguales :: Integer -> Bool
 todosDigitosIguales x | x < 10 = True
-                      | mod x 10 == mod (div x 10) 10 = todosDigitosIguales (div x 10)
+                      | mod x 10 == mod (c x) 10 = todosDigitosIguales (c x)
                       | otherwise = False
-
+                          where c n = div n 10 -- c = Numero Sin Unidades
 
 -- 8 Implementar la función iesimoDigito :: Integer -> Integer -> Integer que dado un n ∈ N≥0 y un i ∈ N menor o igual a la cantidad de dígitos de n, devuelve el i-ésimo dígito de n.
 
@@ -67,11 +69,15 @@ cantDigitos n | n < 10 = 1
 
 -- 9 Especificar e implementar una función esCapicua :: Integer -> Bool que dado n ∈ N≥0 determina si n es un número capicúa.
 
--- ? SOLO DICE TRUE SI EL PRIMER Y ÚLTIMO NUMERO SON IGUALES
+-- ? usar iesimo y cantDigitos
 
 esCapicua :: Integer -> Bool
-esCapicua n | mod n 10 == iesimoDigito n 1 = True
-            | otherwise = False
+esCapicua n | n < 10 = True
+            | n < 100 = iesimoDigito n 1 == iesimoDigito n 2
+            | otherwise = iesimoDigito n 1 == iesimoDigito n (cantDigitos n) && esCapicua(reducirNum n)
+
+reducirNum :: Integer -> Integer
+reducirNum n = div (mod n (10 ^ (cantDigitos n - 1))) 10
 
 
 -- 10 Especificar, implementar y dar el tipo de las siguientes funciones (símil Ejercicio 4 Práctica 2 de Algebra 1).
@@ -147,9 +153,30 @@ sumaPotenciasAux q a b  | b == 1 = q^(a+b)
 
 sumaRacionales :: Integer -> Integer -> Float
 sumaRacionales 0 _ = 0
-sumaRacionales p q = 
+sumaRacionales p q = sumaRacionales (p-1) q + sumaRacionalesAux p q
 
 sumaRacionalesAux :: Integer -> Integer -> Float
-sumaRacionalesAux p q | q == 1 = p
-                      | otherwise = 
+sumaRacionalesAux p q | q == 1 = fromIntegral p
+                      | otherwise = (fromIntegral p/fromIntegral q) + sumaRacionalesAux p (q-1)
+
+
+-- 16 Recordemos que un entero p > 1 es primo si y s´olo si no existe un entero k tal que 1 < k < p y k divida a p.
+
+-- 16a mplementar menorDivisor :: Integer ->Integer que calcule el menor divisor (mayor que 1) de un natural n pasado como par´ametro.
+
+
+
+
+-- 16b Implementar la funci´on esPrimo :: Integer ->Bool que indica si un n´umero natural pasado como par´ametro es primo.
+
+
+
+
+-- 16c Implementar la funci´on sonCoprimos :: Integer ->Integer ->Bool que dados dos n´umeros naturales indica si no tienen alg´un divisor en com´un mayor estricto que 1.
+
+
+
+
+-- 16d Implementar la funci´on nEsimoPrimo :: Integer ->Integer que devuelve el n-´esimo primo (n ≥ 1). Recordar que el primer primo es el 2, el segundo es el 3, el tercero es el 5, etc.
+
 
