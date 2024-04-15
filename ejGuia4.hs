@@ -109,15 +109,14 @@ e :: Float
 e = eAprox 10
 
 
--- ? 12 Especificar e implementar una función raizDe2Aprox :: Integer -> Float que dado n ∈ N devuelva la aproximación de √2 definida por √2 ≈ an−1.
+-- 12 Especificar e implementar una función raizDe2Aprox :: Integer -> Float que dado n ∈ N devuelva la aproximación de √2 definida por √2 ≈ an−1.
 
 raizDe2Aprox :: Integer -> Float
-raizDe2Aprox 0 = 1
-raizDe2Aprox n = (2 + (1 / raizDe2Aprox (n - 1))) - 1
+raizDe2Aprox n = aprox n - 1
 
--- sucecionRaiz2 :: Integer -> Float
--- sucecionRaiz2 0 = 2
--- sucecionRaiz2 n = 2 + (1 / raizDe2Aprox (n - 1))
+aprox :: Integer -> Float
+aprox n | n==1 = 2
+        | otherwise = 2 + ( 1 / aprox (n-1) )
 
 
 -- 13 Especificar e implementar la siguiente función
@@ -134,4 +133,23 @@ sumatoriaInterna n j = n^j + sumatoriaInterna n (j-1)
 
 -- 14 Especificar e implementar una función sumaPotencias :: Integer ->Integer ->Integer ->Integer que dados tres naturales q, n, m sume todas las potencias de la forma q^a+b con 1 ≤ a ≤ n y 1 ≤ b ≤ m.
 
+sumaPotencias :: Integer -> Integer -> Integer -> Integer
+sumaPotencias q 1 b = sumaPotenciasAux q 1 b
+sumaPotencias q a b = sumaPotencias q (a-1) b + sumaPotenciasAux q a b
+
+
+sumaPotenciasAux :: Integer -> Integer -> Integer -> Integer
+sumaPotenciasAux q a b  | b == 1 = q^(a+b)
+                        | otherwise = sumaPotenciasAux q a (b-1) + q^(a+b)
+
+
+-- 15 Especificar e implementar una función sumaRacionales :: Integer ->Integer ->Float que dados dos naturales n, m sume todos los número racionales de la forma p/q con 1 ≤ p ≤ n y 1 ≤ q ≤ m
+
+sumaRacionales :: Integer -> Integer -> Float
+sumaRacionales 0 _ = 0
+sumaRacionales p q = 
+
+sumaRacionalesAux :: Integer -> Integer -> Float
+sumaRacionalesAux p q | q == 1 = p
+                      | otherwise = 
 
