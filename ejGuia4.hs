@@ -72,9 +72,13 @@ cantDigitos n | n < 10 = 1
 -- ? usar iesimo y cantDigitos
 
 esCapicua :: Integer -> Bool
-esCapicua n | n < 10 = True
-            | n < 100 = iesimoDigito n 1 == iesimoDigito n 2
-            | otherwise = iesimoDigito n 1 == iesimoDigito n (cantDigitos n) && esCapicua(reducirNum n)
+esCapicua n = posDigito n (cantDigitos n) 1
+
+posDigito :: Integer -> Integer -> Integer -> Bool
+posDigito n i c | c > div (cantDigitos n) 2 = True
+                | iesimoDigito n i == iesimoDigito n c = posDigito n (i-1) (c+1)
+                | otherwise = False
+
 
 reducirNum :: Integer -> Integer
 reducirNum n = div (mod n (10 ^ (cantDigitos n - 1))) 10
@@ -200,6 +204,27 @@ nEsimoPrimoAux n c p | esPrimo p && c == n-1 = p -- CASO BASE
                      | esPrimo p = nEsimoPrimoAux n (c+1) (p+1) -- si p es primo pero el contador no es igual a n pasa
                      | otherwise = nEsimoPrimoAux n c (p+1) -- si p no es primo aumenta p en uno y pasa
 
+
+-- 17 Implementar la función esFibonacci :: Integer ->Bool
+
+esFibonacci :: Integer -> Bool
+esFibonacci n = esFiboAux n 1
+
+esFiboAux :: Integer -> Integer -> Bool
+esFiboAux n i | n == fibonacci i = True
+               | n < fibonacci i = False
+               | otherwise = esFiboAux n (i+1)
+
+
+-- 18 Implementar una función mayorDigitoPar :: Integer ->Integer
+
+mayorDigitoPar :: Integer -> Integer
+mayorDigitoPar n = recorrerDigitos n 1 (-1)
+
+recorrerDigitos :: Integer -> Integer -> Integer -> Integer -- "n"umero, "p"osicion, "m"ayor
+recorrerDigitos n p m | p >= cantDigitos n = m
+                      | mod (iesimoDigito n p) 2 == 0 && iesimoDigito n p > m = recorrerDigitos n (p+1) (iesimoDigito n p)
+                      | otherwise = recorrerDigitos n (p+1) m
 
 
 
