@@ -259,3 +259,18 @@ sumaDivAux n d | d == n = d
                | otherwise = sumaDivAux n (d + 1)
 
 
+-- 21 Especificar e implementar una funci´on pitagoras :: Integer ->Integer ->Integer ->Integer que dados m, n , r ∈ N≥0, cuente cu´antos pares (p, q) con 0 ≤ p ≤ m y 0 ≤ q ≤ n satisfacen que p^2 + q^2 ≤ r^2
+
+pitagoras :: Integer -> Integer -> Integer -> Integer
+pitagoras m n r | m == 0 = pitagorasAux m n r
+                | otherwise = pitagorasAux m n r + pitagoras (m-1) n r
+
+pitagorasAux :: Integer -> Integer -> Integer -> Integer
+pitagorasAux m n r  | n == 0 = pitagorasVal m n r
+                    | otherwise = pitagorasVal m n r + pitagorasAux m (n-1) r
+
+pitagorasVal :: Integer -> Integer -> Integer -> Integer
+pitagorasVal p q r | p^2 + q^2 <= r^2 = 1
+                   | otherwise = 0
+
+
