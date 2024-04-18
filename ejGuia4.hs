@@ -241,6 +241,21 @@ sumaIniPrimos n s c | n == s = True
 
 -- 20 Especificar e implementar la función tomaValorMax :: Int ->Int ->Int que dado un número entero n1 ≥1 y un n2 ≥ n1 devuelve algún m entre n1 y n2 tal que sumaDivisores(m) = max{sumaDivisores(i) |n1 ≤i ≤n2}
 
--- tomaValorMax :: Int -> Int -> Int
--- tomaValorMax n1 n2 
+tomaValorMax :: Integer -> Integer -> Integer --ver que n1 <= n2
+tomaValorMax n1 n2 = tomaValorMaxAux n1 n2 0
+
+tomaValorMaxAux :: Integer -> Integer -> Integer -> Integer 
+tomaValorMaxAux n1 n2 max | n1 == n2 && sumaDivisores n1 > max = sumaDivisores n1 
+                          | n1 == n2 = max 
+                          | sumaDivisores n1 > max = tomaValorMaxAux (n1+1) n2 (sumaDivisores n1)
+                          | otherwise = tomaValorMaxAux (n1+1) n2 max 
+
+sumaDivisores :: Integer -> Integer
+sumaDivisores n = sumaDivAux n 1 
+
+sumaDivAux :: Integer -> Integer -> Integer
+sumaDivAux n d | d == n = d 
+               | esDivisible d n = d + sumaDivAux n (d + 1)
+               | otherwise = sumaDivAux n (d + 1)
+
 
