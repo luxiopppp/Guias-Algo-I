@@ -69,6 +69,86 @@ todosDistintos (x:y:xs) | x == y = False -- ! importante esto y no "x /= y = Tru
 hayRepetidos :: (Eq t) => [t] -> Bool
 hayRepetidos [] = False
 hayRepetidos [x] = False
-hayRepetidos (x:xs) | pertenece x xs = True -- se fija si el el head xs aparece en tail xs, sino pasa
+hayRepetidos (x:xs) | pertenece x xs = True -- se fija si el head xs aparece en tail xs, sino pasa
                     | otherwise = hayRepetidos xs
+
+
+-- 2.5 quitar :: (Eq t) => t -> [t] -> [t], que dados un entero n y una lista xs, elimina la primera aparición de x en la lista xs (de haberla).
+
+quitar :: (Eq t) => t -> [t] -> [t]
+quitar _ [] = []
+quitar n (x:xs) | n == x = xs
+                | otherwise = x:(quitar n xs)
+
+
+-- 2.6 quitarTodos :: (Eq t ) => t -> [t] -> [t], que dados un entero n y una lista xs, elimina todas las apariciones de x en la lista xs (de haberlas).
+
+quitarTodos :: (Eq t ) => t -> [t] -> [t]
+quitarTodos _ [] = []
+quitarTodos n (x:xs) | n == x = quitarTodos n xs
+                     | otherwise = x:(quitarTodos n xs)
+
+
+-- prueba quitarNVeces :: (Eq t ) => t -> Integer -> [t] -> [t], que dados dos enteros n y x y una lista xs, elimina el numero n, x cantidad de veces de la lista xs
+
+quitarNVeces :: (Eq t ) => t -> Integer -> [t] -> [t]
+quitarNVeces _ _ [] = []
+quitarNVeces n v (x:xs) | v == 0 = (x:xs)
+                        | n == x = quitarNVeces n (v-1) xs
+                        | otherwise = x:(quitarNVeces n v xs)
+
+
+-- 2.7 eliminarRepetidos :: (Eq t) => [t] -> [t] que deja en la lista una única aparición de cada elemento, eliminando las repeticiones adicionales.
+
+eliminarRepetidos :: (Eq t) => [t] -> [t]
+eliminarRepetidos [] = []
+eliminarRepetidos [x] = [x]
+eliminarRepetidos (x:y:xs) | x == y && pertenece x xs == True = eliminarRepetidos xs
+                           | x == y || pertenece x xs == True = eliminarRepetidos (y:xs)
+                           | otherwise = x:y:(eliminarRepetidos xs)
+
+
+-- 2.8 mismosElementos :: (Eq t) => [t] -> [t] -> Bool, que dadas dos listas devuelve verdadero sı́ y solamente sı́ ambas listas contienen los mismos elementos, sin tener en cuenta repeticiones
+
+mismosElementos :: (Eq t) => [t] -> [t] -> Bool
+mismosElementos xs ys = incluido xs ys && incluido ys xs
+
+incluido :: (Eq t) => [t] -> [t] -> Bool
+incluido [] _ = True
+incluido _ [] = False
+incluido xs ys | pertenece (head xs) ys = incluido (tail xs) ys
+               | otherwise = False
+
+
+-- 2.9 capicua :: (Eq t) => [t] -> Bool según la especificación
+
+capicua :: (Eq t) => [t] -> Bool
+capicua xs = xs == (reverso xs)
+
+
+-- 3 Definir las siguientes funciones sobre listas de enteros
+
+-- 3.1 sumatoria :: [Integer] -> Integer según la especificación
+
+sumatoria :: [Integer] -> Integer
+sumatoria xs = sumAux xs 0
+  where sumAux xs c | xs == [] = 0
+                    | otherwise = (head xs) + sumAux (tail xs) c
+
+
+-- 3.2 productoria :: [Integer] -> Integer según la especificación
+
+productoria :: [Integer] -> Integer
+productoria xs = prodAux xs 0
+  where prodAux xs c | xs == [] = 1
+                     | otherwise = (head xs) * prodAux (tail xs) c
+
+
+-- 3.3 maximo :: [Integer] -> Integer según la especificación
+
+
+
+
+
+
 
