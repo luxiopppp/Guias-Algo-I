@@ -215,6 +215,17 @@ contarPalabras xs | (head (tail xs)) == ' ' = 1 + contarPalabras (tail xs)
                   | otherwise = contarPalabras (tail xs)
 
 
+-- 4c palabras :: [Char] -> [[Char]], que dada una lista arma una nueva lista con las palabras de la lista original.
+
+palabras :: [Char] -> [[Char]]
+palabras xs = palabrasAux xs [] []
+
+palabrasAux :: [Char] -> [Char] -> [[Char]] -> [[Char]] -- ! RECONTRA REBUSCADO MAL
+palabrasAux (x:xs) cache l | xs == [] && x /= ' ' = reverso ((reverso (x:cache)):l)
+                           | xs == [] = reverso ((reverso cache):l)
+                           | x /= ' ' = palabrasAux xs (x:cache) l
+                           | otherwise = palabrasAux xs [] ((reverso cache):l)
+
 
 
 
