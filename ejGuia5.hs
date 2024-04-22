@@ -146,6 +146,74 @@ productoria xs = prodAux xs 0
 
 -- 3.3 maximo :: [Integer] -> Integer según la especificación
 
+maximo :: [Integer] -> Integer
+maximo [] = 0
+maximo [x] = x
+maximo (x:y:xs) | x >= y = maximo (x:xs)
+                | otherwise = maximo (y:xs)
+
+
+-- 3.4 sumarN :: Integer -> [Integer] -> [Integer] según la especificación
+
+sumarN :: Integer -> [Integer] -> [Integer]
+sumarN _ [] = []
+sumarN n (x:xs) = (n+x):(sumarN n xs)
+
+
+-- 3.5 sumarElPrimero :: [Integer] -> [Integer] según la especificación
+
+sumarElPrimero :: [Integer] -> [Integer]
+sumarElPrimero xs = sumarN (head xs) xs
+
+
+-- 3.6 sumarElUltimo :: [Integer] -> [Integer] según la especificación
+
+sumarElUltimo :: [Integer] -> [Integer]
+sumarElUltimo xs = sumarN (ultimo xs) xs
+
+
+-- 3.7 pares :: [Integer] -> [Integer] según la especificación
+
+pares :: [Integer] -> [Integer]
+pares [] = []
+pares xs | mod (head xs) 2 == 0 = (head xs):(pares (tail xs))
+         | otherwise = pares (tail xs)
+
+
+-- 3.8 multiplosDeN :: Integer -> [Integer] -> [Integer] que dado un número n y una lista xs, devuelve una lista con los elementos de xs múltiplos de n.
+
+multiplosDeN :: Integer -> [Integer] -> [Integer]
+multiplosDeN _ [] = []
+multiplosDeN n xs | mod (head xs) n == 0 = (head xs):(multiplosDeN n (tail xs))
+         | otherwise = multiplosDeN n (tail xs)
+
+
+-- 3.9 ordenar :: [Integer] -> [Integer] que ordena los elementos de la lista en forma creciente. Sugerencia: Pensar cómo pueden usar la función máximo para que ayude a generar la lista ordenada necesaria.
+
+ordenar :: [Integer] -> [Integer]
+ordenar xs = reverso(ordAux xs)
+  where ordAux xs | xs == [] = []
+                  | otherwise = (maximo xs):(ordAux (quitar (maximo xs) xs))
+
+
+-- 4.1 Definir las siguientes funciones sobre listas de caracteres, interpretando una palabra como una secuencia de caracteres sin blancos
+
+-- 4a sacarBlancosRepetidos :: [Char] -> [Char], que reemplaza cada subsecuencia de blancos contiguos de la primera lista por un solo blanco en la lista resultado.
+
+sacarBlancosRepetidos :: [Char] -> [Char]
+sacarBlancosRepetidos [] = []
+sacarBlancosRepetidos [x] = [x]
+sacarBlancosRepetidos (x:y:xs) | x == ' ' && y == x = sacarBlancosRepetidos (y:xs)
+                               | otherwise = x:(sacarBlancosRepetidos (y:xs))
+
+-- 4b contarPalabras :: [Char] -> Integer, que dada una lista de caracteres devuelve la cantidad de palabras que tiene.
+
+contarPalabras :: [Char] -> Integer
+contarPalabras [] = 0
+contarPalabras [x] = 1
+contarPalabras xs | (head (tail xs)) == ' ' = 1 + contarPalabras (tail xs)
+                  | otherwise = contarPalabras (tail xs)
+
 
 
 
