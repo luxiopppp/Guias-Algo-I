@@ -226,6 +226,64 @@ palabrasAux (x:xs) cache l | xs == [] && x /= ' ' = reverso ((reverso (x:cache))
                            | x /= ' ' = palabrasAux xs (x:cache) l
                            | otherwise = palabrasAux xs [] ((reverso cache):l)
 
+-- palabras :: [Char] -> [[Char]]
+-- palabras lista = palabrasAux lista []
+
+-- palabrasAux :: [Char] -> [Char] -> [[Char]]
+-- palabrasAux [] actual = [actual]
+-- palabrasAux (x:xs) actual | x /= ' ' = (palabrasAux xs (actual ++ [x]))
+--                           | x == ' ' = [actual] ++ (palabrasAux xs []) 
+
+
+-- 4d palabraMasLarga :: [Char] -> [Char], que dada una lista de caracteres devuelve su palabra más larga.
+
+palabraMasLarga :: [Char] -> [Char]
+palabraMasLarga xs = masLargaAux xs [] []
+
+masLargaAux :: [Char] -> [Char] -> [Char] -> [Char] -- xs = lista original, m = max, aux
+masLargaAux [] m _ = m
+masLargaAux (x:xs) m aux | x == ' ' && longitud aux > longitud m = masLargaAux xs aux []
+                         | x == ' ' = masLargaAux xs m []
+                         | otherwise = masLargaAux xs m (aux ++ [x])
+
+
+-- 4e aplanar :: [[Char]] -> [Char] , que a partir de una lista de palabras arma una lista de caracteres concatenándolas.
+
+aplanar :: [[Char]] -> [Char]
+aplanar [] = " "
+aplanar [x] = x
+aplanar (x:xs) = x ++ aplanar xs
+
+
+-- 4f aplanarConBlancos :: [[Char]] -> [Char], que a partir de una lista de palabras, arma una lista de caracteres concatenándolas e insertando un blanco entre cada palabra.
+
+aplanarConBlancos :: [[Char]] -> [Char]
+aplanarConBlancos [] = " "
+aplanarConBlancos [x] = x
+aplanarConBlancos (x:xs) = x ++ " " ++ aplanarConBlancos xs
+
+
+-- 4g aplanarConNBlancos :: [[Char]] -> Integer -> [Char], que a partir de una lista de palabras y un entero n, arma una lista de caracteres concatenándolas e insertando n blancos entre cada palabra (n debe ser no negativo).
+
+aplanarConNBlancos :: [[Char]] -> Integer -> [Char]
+aplanarConNBlancos [] n = " "
+aplanarConNBlancos [x] _ = x
+aplanarConNBlancos (x:xs) n = x ++ cantBlancos n ++ aplanarConNBlancos xs n
+
+cantBlancos :: Integer -> [Char]
+cantBlancos 1 = " "
+cantBlancos n = " " ++ cantBlancos (n-1)
+
+
+-- 5 Definir las siguientes funciones sobre listas
+
+-- 5.1 sumaAcumulada :: (Num t) => [t] -> [t] según la especificación
+
+sumaAcumulada :: (Num t) => [t] -> [t]
+sumaAcumulada [] = []
+sumaAcumulada [x] = [x]
+sumaAcumulada xs = sumAcumAux xs (longitud xs)
+
 
 
 
