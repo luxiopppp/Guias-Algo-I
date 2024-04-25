@@ -282,10 +282,47 @@ cantBlancos n = " " ++ cantBlancos (n-1)
 sumaAcumulada :: (Num t) => [t] -> [t]
 sumaAcumulada [] = []
 sumaAcumulada [x] = [x]
-sumaAcumulada xs = sumAcumAux xs (longitud xs)
+sumaAcumulada xs = sumaAcumulada (principio xs) ++ [(ultimo xs) + ultimo (sumaAcumulada (principio xs))]
+
+
+-- 5.2 descomponerEnPrimos :: [Integer] -> [[Integer]] según la especificación
+
+descomponerEnPrimos :: [Integer] -> [[Integer]]
+descomponerEnPrimos [] = []
+descomponerEnPrimos xs | esPrimo (head xs) = [head xs]:descomponerEnPrimos (tail xs)
+                       | (tail xs) == [] = [descomponerAux (head xs) 1 []]
+                       | otherwise = descomponerAux (head xs) 1 []:descomponerEnPrimos (tail xs)
+
+descomponerAux :: Integer -> Integer -> [Integer] -> [Integer] -- x = head x, i = iesimo primo, xs = res
+descomponerAux x i xs | esPrimo x = x:xs
+                      | mod x (nEsimoPrimo i) == 0 = descomponerAux (div x (nEsimoPrimo i)) 1 ((nEsimoPrimo i):xs)
+                      | otherwise = descomponerAux x (i+1) xs
 
 
 
 
 
+
+esDivisible :: Integer -> Integer -> Bool
+esDivisible 0 _ = True
+esDivisible a b | a < b = False
+                | otherwise = esDivisible (a - b) b
+menorDivisor :: Integer -> Integer
+menorDivisor 1 = 1
+menorDivisor n = menorDivisorAux n 2 -- 2 porque pide menor divisor mayor que 1
+
+menorDivisorAux :: Integer -> Integer -> Integer
+menorDivisorAux n m | esDivisible n m = m -- m <=> mod n m == 0 => si n primo m <=> m = n
+                    | otherwise = menorDivisorAux n (m+1)
+
+esPrimo :: Integer -> Bool
+esPrimo n = n == menorDivisor n
+
+nEsimoPrimo :: Integer -> Integer
+nEsimoPrimo n = nEsimoPrimoAux n 0 2
+
+nEsimoPrimoAux :: Integer -> Integer -> Integer -> Integer
+nEsimoPrimoAux n c p | esPrimo p && c == n-1 = p -- CASO BASE
+                     | esPrimo p = nEsimoPrimoAux n (c+1) (p+1) -- si p es primo pero el contador no es igual a n pasa
+                     | otherwise = nEsimoPrimoAux n c (p+1) -- si p no es primo aumenta p en uno y pasa
 
