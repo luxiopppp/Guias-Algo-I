@@ -40,18 +40,23 @@ personas (x:xs) | pertenece (fst x) (personas xs) && pertenece (snd x) (personas
 
 amigosDe :: String -> [(String,String)] -> [String]
 amigosDe _ [] = []
-amigosDe p (x:xs) | p == (fst x) || p == (snd x) = (fst x):((snd x):(amigosDe p xs))
+amigosDe p (x:xs) | p == (fst x) = (snd x):(amigosDe p xs)
+                  | p == (snd x) = (fst x):(amigosDe p xs)
                   | otherwise = amigosDe p xs
 
 
 -- 4
 
--- personaConMasAmigos :: [(String,String)] -> String
--- personaConMasAmigos [] = ""
--- personaConMasAmigos gs = masAmigoAux gs "" (-1)
+personaConMasAmigos :: [(String,String)] -> String
+personaConMasAmigos la = masAmigosAux la (personas la)
 
--- masAmigoAux :: [(String,String)] -> String -> Int -> String
--- masAmigoAux [] p _ = p
--- masAmigoAux (g:gs) p c | longitud (amigosDe p (g:gs)) >= c = p
---                        | otherwise = masAmigoAux gs (fst g) (longitud (fst g))
+masAmigosAux :: [(String,String)] -> [String] -> String
+masAmigosAux _ [] = " "
+masAmigosAux _ [x] = x
+masAmigosAux la (p1:p2:ps) | longitud (amigosDe p1 la) >= longitud (amigosDe p2 la) = masAmigosAux la (p1:ps)
+                           | otherwise = masAmigosAux la (p2:ps)
+
+
+
+
 
