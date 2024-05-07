@@ -1,5 +1,3 @@
-module Parcial0605 where
-
 -- 1
 
 hayQueCodificar :: Char -> [(Char,Char)] -> Bool
@@ -26,7 +24,6 @@ laQueMasAux [] max _ = fst max
 laQueMasAux f max map
     | hayQueCodificar (head f) map && cuantasVecesHayQueCodificar (head f) f [(head f,' ')] > snd max = laQueMasAux (tail f) (head f, cuantasVecesHayQueCodificar (head f) f [(head f, ' ')]) map
     | otherwise = laQueMasAux (tail f) max map
-    
 
 -- 4
 
