@@ -19,13 +19,13 @@ cuantasVecesHayQueCodificar c f map
 -- 3
 
 laQueMasHayQueCodificar :: [Char] -> [(Char,Char)] -> Char
-laQueMasHayQueCodificar f _ = laQueMasAux f ('!', 0)
+laQueMasHayQueCodificar f map = laQueMasAux f ('!', 0) map
 
-laQueMasAux :: [Char] -> (Char,Int) -> Char
-laQueMasAux [] max = fst max
-laQueMasAux f max 
-    | cuantasVecesHayQueCodificar (head f) f [(head f,' ')] > snd max = laQueMasAux (tail f) (head f, cuantasVecesHayQueCodificar (head f) f [(head f, ' ')])
-    | otherwise = laQueMasAux (tail f) max
+laQueMasAux :: [Char] -> (Char,Int) -> [(Char,Char)] -> Char
+laQueMasAux [] max _ = fst max
+laQueMasAux f max map
+    | hayQueCodificar (head f) map && cuantasVecesHayQueCodificar (head f) f [(head f,' ')] > snd max = laQueMasAux (tail f) (head f, cuantasVecesHayQueCodificar (head f) f [(head f, ' ')]) map
+    | otherwise = laQueMasAux (tail f) max map
     
 
 -- 4
