@@ -63,8 +63,3 @@ promedioNotas :: [Char] -> [([Char],[Int])] -> Float
 promedioNotas a (n:ns) 
     | a == fst n = division (sumatoria (snd n)) (longitud (snd n))
     | otherwise = promedioNotas a ns
-
-
-
-
-
