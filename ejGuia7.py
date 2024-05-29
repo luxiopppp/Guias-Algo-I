@@ -125,7 +125,7 @@ def borrarVocales(s: str) -> str:
     return res
 
 
-def esVocal(c: chr) -> bool:
+def esVocal(c: str) -> bool:
     res: bool = False
 
     if c == "a" or c == "e" or c == "i" or c == "o" or c == "u":
