@@ -33,7 +33,7 @@ def divide_a_todos(s: list [int], e: int) -> bool:
     res: bool = True
     
     for i in range(len(s)):
-        res = res and (s[i] % e) == 0 # checkea el caso base y el siguiente y ...
+        res = res and (s[i] % e) == 0 # checkea el caso base y el siguiente y etc...
     
     return res
 
@@ -135,10 +135,4 @@ def esVocal(c: str) -> bool:
 
 # 2.4
 
-def reemplazaVocales(s: str) -> str:
-
-    
-
-
-
-
+# def reemplazaVocales(s: str) -> str:
