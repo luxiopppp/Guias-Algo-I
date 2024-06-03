@@ -522,7 +522,89 @@ def pertenece_dictkeys(key, dict: dict) -> bool:
 
     return res
 
+# 20
+
+def d_calcular_promedio_por_estudiante(nombre_archivo_notas: str) -> dict[str,float]:
+    archivo_notas: list = csv_a_lista(nombre_archivo_notas)
+    promedios: dict [str,float] = {}
+
+    i: int = 1
+
+    while i < len(archivo_notas):
+        if not pertenece_dictkeys((archivo_notas[i])[0], promedios):
+            promedios[(archivo_notas[i])[0]] = promedio_estudiante(nombre_archivo_notas, (archivo_notas[i])[0])
+
+        i = i + 1
+
+    return promedios
+
+# 21
+
+def la_palabra_mas_frecuente(nombre_archivo: str) -> str:
+    archivo: str = open(nombre_archivo, "r")
+    contenido: str = archivo.read()
+    archivo.close()
+
+    diccionario: dict = {}
+
+    palabra: str = ""
+    max: int = 0
+
+    for i in range(len(contenido)):
+        if contenido[i] != " " and contenido[i] != "\n":
+            palabra = palabra + contenido[i]
+        elif palabra != "":
+            if not pertenece_dictkeys(palabra, diccionario):
+                diccionario[palabra] = 1
+            else:
+                diccionario[palabra] = diccionario[palabra] + 1
+            
+            palabra = ""
+
+    for j in range(len(list(diccionario.values()))):
+        if list(diccionario.values())[j] >= max:
+            max = list(diccionario.values())[j]
+            palabra = list(diccionario.keys())[j]
+    
+    return palabra
 
 
+# 22
 
+historiales: dict [str, Pila [str]] = {}
+
+def visitar_sitio(historiales: dict [str, Pila [str]], usuario: str, sitio: str) -> None:
+    if not pertenece_dictkeys(usuario, historiales):
+        historiales[usuario] = Pila()
+        historiales[usuario].put(sitio)
+    else:
+        historiales[usuario].put(sitio)
+
+def navegar_atras(historiales: dict [str, Pila [str]], usuario: str) -> None:
+    historiales[usuario].get()
+
+# 23
+
+inventario: dict [str, dict [float, int]] = {}
+
+def agregar_producto(inventario: dict, nombre: str, precio: float, cantidad: int) -> None:
+    info: dict [float, int] = {}
+
+    if not pertenece_dictkeys(nombre, inventario):
+        info["precio"], info["cantidad"] = precio, cantidad
+        inventario[nombre] = info
+
+def actualizar_stock(inventario: dict, nombre: str, cantidad: int) -> None:
+    inventario[nombre]["cantidad"] = cantidad
+
+def actualizar_precios(inventario: dict, nombre: str, precio: float) -> None:
+    inventario[nombre]["precio"] = precio
+
+def calcular_valor_inventario(inventario: dict) -> float:
+    valor: float = 0
+
+    for i in range(len(list(inventario.values()))):
+        valor = valor + (list(inventario.values())[i]["precio"] * list(inventario.values())[i]["cantidad"])
+    
+    return valor
 
