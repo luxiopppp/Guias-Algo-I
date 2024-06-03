@@ -90,7 +90,7 @@ def invertir_lineas(nombre_archivo: str) -> None:
     archivo: str = open(nombre_archivo)
     contenido: list [str] = archivo.readlines() # esto es una lista de strings
 
-    archivo_invertido: str = open("inv_" + nombre_archivo, "w")
+    archivo_invertido: str = open("reverso.txt", "w")
 
     for i in range(len(contenido)):
         archivo_invertido.write(sacar_enter(contenido[(len(contenido) - 1) - i]))
