@@ -405,8 +405,9 @@ def jugar_carton_de_bingo(carton: list, bolillero: Cola) -> int:
     jugadas: int = 0
     jugadas_totales: int = 0
 
+
     for _ in range(len(list(bolillero.queue))):
-        if len(carton) == 0:
+        if len(carton_copy) == 0:
             jugadas_totales = jugadas
         else:
             nro: int = bolillero.get()
@@ -415,16 +416,14 @@ def jugar_carton_de_bingo(carton: list, bolillero: Cola) -> int:
 
             j: int = 0
 
-            while j < len(carton):
-                if nro == carton[j]:
-                    carton.pop(j)
+            while j < len(carton_copy):
+                if nro == carton_copy[j]:
+                    carton_copy.pop(j)
                 
                 j = j + 1
             
             bolillero.put(nro)
-    
 
-    carton = carton_copy
     return jugadas_totales
 
 # 17
