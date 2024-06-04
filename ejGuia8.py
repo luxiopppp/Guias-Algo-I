@@ -60,7 +60,6 @@ def cantidad_apariciones(palabra: str, nombre_archivo: str) -> int:
 
     return napa
 
-
 # 2
 
 def clonar_sin_comentarios(nombre_archivo: str) -> None:
@@ -82,7 +81,6 @@ def es_comentario(linea: str) -> bool:
             return False
         elif linea[i] == "#":
             return True
-        
 
 # 3
 
@@ -109,7 +107,6 @@ def sacar_enter(linea: str) -> str:
     
     return linea_sin_enter
 
-
 # 4
 
 def agregar_frase_al_final(nombre_archivo: str, frase: str) -> None:
@@ -121,7 +118,6 @@ def agregar_frase_al_final(nombre_archivo: str, frase: str) -> None:
             archivo.write("\n" + frase)
 
     archivo.close()
-
 
 # 5
 
@@ -137,7 +133,6 @@ def agregar_frase_al_principio(nombre_archivo: str, frase: str) -> None:
 
     archivo.close()
     wr_archivo.close()
-
 
 # 6
 
@@ -179,9 +174,6 @@ def calcular_promedio_por_estudiante(nombre_archivo_notas: str, nombre_archivo_p
     archivo_promedios.close()
 
 def promedio_estudiante(nombre_archivo: str, lu: str) -> float:
-
-
-
     archivo_notas: list = csv_a_lista(nombre_archivo)
 
     promedio: float = 0
@@ -264,13 +256,16 @@ def generar_nros_al_azar(cantidad: int, desde: int, hasta: int) -> Pila:
 # 9
 
 def cantidad_elementos(p: Pila) -> int:
-    pila = p
+    nros: list = []
     cantidad: int = 0
 
     for _ in range(len(p.queue)):
         if not p.empty():
-            p.get()
+            nros.append(p.get())
             cantidad = cantidad + 1
+
+    for i in range(len(nros)):
+        p.put(nros[(len(nros) - 1) - i])
     
     return cantidad
 
@@ -314,7 +309,7 @@ def evaluar_expresion(s: str) -> float:
     for i in range(len(s)):
         if s[i] == " " and (s[i-1] >= "0" and s[i-1] <= "9"):
             p.put(int(token))
-            token = ""
+            token = "" # reset
         elif s[i] >= "0" and s[i] <= "9":
             token = token + s[i]
         elif s[i] == "+":
@@ -338,7 +333,7 @@ def evaluar_expresion(s: str) -> float:
             r = b / a
             p.put(r)
 
-    res: float = int(p.get())
+    res: float = float(p.get())
 
     return res
 
