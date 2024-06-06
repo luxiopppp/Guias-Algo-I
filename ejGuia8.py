@@ -396,23 +396,19 @@ def jugar_carton_de_bingo(carton: list, bolillero: Cola) -> int:
     jugadas: int = 0
     jugadas_totales: int = 0
 
-    for _ in range(len(list(bolillero.queue))):
+    for i in bolillero.queue:
         if len(carton_copy) == 0:
             jugadas_totales = jugadas
         else:
-            nro: int = bolillero.get()
-
             jugadas = jugadas + 1
 
             j: int = 0
 
             while j < len(carton_copy):
-                if nro == carton_copy[j]:
+                if i == carton_copy[j]:
                     carton_copy.pop(j)
                 
                 j = j + 1
-            
-            bolillero.put(nro)
 
     return jugadas_totales
 
@@ -421,13 +417,9 @@ def jugar_carton_de_bingo(carton: list, bolillero: Cola) -> int:
 def n_pacientes_urgentes(c: Cola) -> int:
     urgentes: int = 0
 
-    for _ in range(len(list(c.queue))):
-        paciente = c.get()
-
-        if paciente[0] <= 3:
+    for i in c.queue:
+        if i[0] <= 3:
             urgentes = urgentes + 1
-        
-        c.put(paciente)
 
     return urgentes
 
@@ -441,22 +433,17 @@ def atencion_a_clientes(c: Cola) -> Cola:
 
     tipos: list = [prioridad,preferencial,resto]
 
-    for _ in range(len(list(c.queue))):
-        cliente: tuple [(str,int,bool,bool)] = c.get()
-
-        if cliente[3]:
-            prioridad.put(cliente)
-        elif cliente[2]:
-            preferencial.put(cliente)
+    for i in c.queue:
+        if i[3]:
+            prioridad.put(i)
+        elif i[2]:
+            preferencial.put(i)
         else:
-            resto.put(cliente)
-
-        c.put(cliente)
+            resto.put(i)
 
     for i in range(len(tipos)):
-        for _ in range(len(list(tipos[i].queue))):
-            cliente: tuple [(str,int,bool,bool)] = tipos[i].get()
-            clientes.put(cliente)
+        for j in tipos[i].queue:
+            clientes.put(j)
     
     return clientes
 
