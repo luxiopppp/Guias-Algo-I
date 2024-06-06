@@ -165,7 +165,7 @@ def calcular_promedio_por_estudiante(nombre_archivo_notas: str, nombre_archivo_p
     for i in range(len(archivo_notas)):
         if i != 0:
             linea = f"{archivo_notas[i][0]}, {promedio_estudiante(nombre_archivo_notas, archivo_notas[i][0])}\n"
-            if not pertenece_linea(promedios, linea):
+            if not linea in promedios:
                 promedios.append(linea)
 
     
@@ -227,15 +227,6 @@ def sacar_espacios(linea: str) -> str:
             linea_sin_espacios = linea_sin_espacios + linea[i]
     
     return linea_sin_espacios
-
-def pertenece_linea(lista: list, a) -> bool:
-    res = False
-
-    for i in range(len(lista)):
-        if lista[i] == a:
-            res = True
-    
-    return res
 
 # PILAS
 
@@ -405,7 +396,6 @@ def jugar_carton_de_bingo(carton: list, bolillero: Cola) -> int:
     jugadas: int = 0
     jugadas_totales: int = 0
 
-
     for _ in range(len(list(bolillero.queue))):
         if len(carton_copy) == 0:
             jugadas_totales = jugadas
@@ -476,7 +466,7 @@ def atencion_a_clientes(c: Cola) -> Cola:
 
 def agrupar_por_longitud(nombre_archivo: str) -> dict:
     archivo: str = open(nombre_archivo, "r")
-    contenido: str = archivo.read()
+    contenido: str = archivo.read() + " "
     archivo.close()
 
     diccionario: dict = {}
@@ -486,10 +476,10 @@ def agrupar_por_longitud(nombre_archivo: str) -> dict:
     for i in range(len(contenido)):
         if contenido[i] != " " and contenido[i] != "\n":
             palabra = palabra + contenido[i]
-        else:
+        elif palabra != "":
             longitud: int = longitud_palabra(palabra)
 
-            if not pertenece_dictkeys(longitud, diccionario):
+            if not longitud in diccionario.keys():
                 diccionario[longitud] = 1
             else:
                 diccionario[longitud] = diccionario[longitud] + 1
@@ -507,15 +497,6 @@ def longitud_palabra(palabra: str) -> int:
 
     return longitud
 
-def pertenece_dictkeys(key, dict: dict) -> bool:
-    res: bool = False
-
-    for i in range(len(dict.keys())):
-        if key == list(dict.keys())[i]:
-            res = True
-
-    return res
-
 # 20
 
 def d_calcular_promedio_por_estudiante(nombre_archivo_notas: str) -> dict[str,float]:
@@ -525,7 +506,7 @@ def d_calcular_promedio_por_estudiante(nombre_archivo_notas: str) -> dict[str,fl
     i: int = 1
 
     while i < len(archivo_notas):
-        if not pertenece_dictkeys((archivo_notas[i])[0], promedios):
+        if not archivo_notas[i][0] in promedios:
             promedios[(archivo_notas[i])[0]] = promedio_estudiante(nombre_archivo_notas, (archivo_notas[i])[0])
 
         i = i + 1
@@ -548,7 +529,7 @@ def la_palabra_mas_frecuente(nombre_archivo: str) -> str:
         if contenido[i] != " " and contenido[i] != "\n":
             palabra = palabra + contenido[i]
         elif palabra != "":
-            if not pertenece_dictkeys(palabra, diccionario):
+            if not palabra in diccionario.keys():
                 diccionario[palabra] = 1
             else:
                 diccionario[palabra] = diccionario[palabra] + 1
@@ -568,7 +549,7 @@ def la_palabra_mas_frecuente(nombre_archivo: str) -> str:
 historiales: dict [str, Pila [str]] = {}
 
 def visitar_sitio(historiales: dict [str, Pila [str]], usuario: str, sitio: str) -> None:
-    if not pertenece_dictkeys(usuario, historiales):
+    if not usuario in historiales.keys():
         historiales[usuario] = Pila()
         historiales[usuario].put(sitio)
     else:
@@ -584,7 +565,7 @@ inventario: dict [str, dict [float, int]] = {}
 def agregar_producto(inventario: dict, nombre: str, precio: float, cantidad: int) -> None:
     info: dict [float, int] = {}
 
-    if not pertenece_dictkeys(nombre, inventario):
+    if not nombre in inventario.keys():
         info["precio"], info["cantidad"] = precio, cantidad
         inventario[nombre] = info
 
